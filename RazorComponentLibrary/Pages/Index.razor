@@ -1,0 +1,46 @@
+﻿@page "/"
+@using RazorComponentLibrary.Data
+
+<XGridTextBoxColumn Value="@test"
+                    OnClick="@OnClickHandler"
+                    OnChange="@OnChangeHandler">
+</XGridTextBoxColumn>
+
+<div>@test</div>
+
+@code{
+
+    string test = "start";
+    IEnumerable<WeatherForecast> data = new List<WeatherForecast>();
+
+    protected override void OnInitialized()
+    {
+        data = new List<WeatherForecast>()
+        {
+                new WeatherForecast { Date = new DateTime(2012,12,01), TemperatureC = 37, Summary = "Line 1" },
+                new WeatherForecast { Date = new DateTime(2012,12,01), TemperatureC = 36, Summary = "Line 2" },
+                new WeatherForecast { Date = new DateTime(2012,12,02), TemperatureC = 32, Summary = "Line 3" },
+                new WeatherForecast { Date = new DateTime(2012,12,02), TemperatureC = 31, Summary = "Line 4" },
+                new WeatherForecast { Date = new DateTime(2012,12,02), TemperatureC = 30, Summary = "Line 5" },
+                new WeatherForecast { Date = new DateTime(2012,12,03), TemperatureC = 24, Summary = "Line 6" },
+                new WeatherForecast { Date = new DateTime(2012,12,03), TemperatureC = 25, Summary = "Line 7" },
+                new WeatherForecast { Date = new DateTime(2012,12,03), TemperatureC = 26, Summary = "Line 8" },
+                new WeatherForecast { Date = new DateTime(2012,12,04), TemperatureC = 29, Summary = "Line 9" },
+                new WeatherForecast { Date = new DateTime(2012,12,05), TemperatureC = 31, Summary = "Line 10" },
+                new WeatherForecast { Date = new DateTime(2012,12,06), TemperatureC = 22, Summary = "Line 11" },
+                new WeatherForecast { Date = new DateTime(2012,12,07), TemperatureC = 22, Summary = "Line 12" },
+                new WeatherForecast { Date = new DateTime(2012,12,07), TemperatureC = 23, Summary = "Line 13" },
+                new WeatherForecast { Date = new DateTime(2012,12,08), TemperatureC = 37, Summary = "Line 14" }
+            };
+    }
+
+    void OnClickHandler(MouseEventArgs args)
+    {
+        //
+    }
+
+    void OnChangeHandler(ChangeEventArgs args)
+    {
+        //
+    }
+}

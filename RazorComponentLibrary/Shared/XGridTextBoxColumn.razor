@@ -1,0 +1,41 @@
+﻿
+<input type="text" class="@CssClass" value="@Value" @onclick="OnClickHandler" @onfocus="OnFocusHandler" @onchange="OnChangeHandler" readonly="@Readonly" disabled="@Disabled" hidden="@Hidden"/>
+
+@code {
+
+    [Parameter] public string Value { get; set; } = "";
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter] public EventCallback<FocusEventArgs> OnFocus { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    [Parameter] public bool Readonly { get; set; } = false;
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public bool Hidden { get; set; } = false;
+
+    [Parameter] public string CssClass { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        //
+    }
+
+    async Task OnClickHandler(MouseEventArgs args)
+    {
+        await OnClick.InvokeAsync(args);
+    }
+
+    async Task OnFocusHandler(FocusEventArgs args)
+    {
+        await OnFocus.InvokeAsync(args);
+    }
+
+    async Task OnChangeHandler(ChangeEventArgs args)
+    {
+        Value = (args.Value as string) + "1";
+        await ValueChanged.InvokeAsync(Value);
+        await OnChange.InvokeAsync(args);
+    }
+}
+
+<style>
+</style>

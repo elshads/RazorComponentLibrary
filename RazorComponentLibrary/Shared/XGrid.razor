@@ -1,0 +1,101 @@
+﻿@typeparam TItem
+
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <div class="p-2"><button/></div>
+            <div class="p-2"><button/></div>
+            <div class="p-2"><button/></div>
+            <div class="p-2"><button/></div>
+        </div>
+    </div>
+    <div class="col-6"></div>
+</div>
+
+<table class="@CssGrid">
+    <thead>
+        <tr class="@CssGridHeader">
+            <th scope="col" class="@cssLGridTh">Reference</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (indexedData.Count() > 0)
+        {
+            @foreach (var item in indexedData)
+            {
+                <tr class="@CssGridRow" @onclick="(() => OnRowClickHandler(1, item))" @ondblclick="(() => OnRowClickHandler(2, item))">
+                    <td class="@cssLGridTd"><input type="text" class="@cssLGridTextBox"/></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+
+    [Parameter] public IEnumerable<TItem> Data { get; set; } = new List<TItem>();
+    [Parameter] public EventCallback<IEnumerable<TItem>> DataChanged { get; set; }
+    [Parameter] public TItem SingleSelectedItem { get; set; }
+    [Parameter] public EventCallback<TItem> SingleSelectedItemChanged { get; set; }
+    [Parameter] public IEnumerable<TItem> MultipleSelectedItems { get; set; } = new List<TItem>();
+    [Parameter] public EventCallback<IEnumerable<TItem>> MultipleSelectedItemsChanged { get; set; }
+    [Parameter] public EventCallback OnRowClick { get; set; }
+
+    [Parameter] public string CssGrid { get; set; } = "table table-bordered table-hover";
+    [Parameter] public string CssGridHeader { get; set; } = "";
+    [Parameter] public string CssGridRow { get; set; } = "";
+
+    string cssLGridTh = "text-nowrap align-middle";
+    string cssLGridTd = "text-nowrap align-middle p-1";
+    string cssLGridTextBox = "form-control border-0";
+
+    List<IndexedItem> indexedData = new List<IndexedItem>();
+
+    protected override void OnInitialized()
+    {
+        DataLoad();
+    }
+
+    void DataLoad()
+    {
+        indexedData = new List<IndexedItem>();
+        if (Data != null)
+        {
+            var rowIndex = -1;
+            foreach (var item in Data)
+            {
+                rowIndex = rowIndex + 1;
+                var indexedItem = new IndexedItem() { RowIndex = rowIndex, Item = item };
+                indexedData.Add(indexedItem);
+            }
+            indexedData = indexedData.OrderBy(e => e.RowIndex).ToList();
+        }
+    }
+
+    void OnRowClickHandler(int clickCount, IndexedItem _indexedItem)
+    {
+        if (clickCount == 1)
+        {
+            //
+        }
+        if (clickCount == 2)
+        {
+            //
+        }
+    }
+
+    private class IndexedItem
+    {
+        public int RowIndex { get; set; }
+        public TItem Item { get; set; }
+    }
+}
+
+<style>
+    .form-control {
+        font-size: .85rem;
+        height: auto;
+        padding: .2rem !important;
+    }
+</style>
